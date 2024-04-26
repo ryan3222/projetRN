@@ -39,10 +39,10 @@ def map_words_to_indices(tweet, vocabulary):
     return indices
 
 # Exemple d'utilisation
-preprocessed_tweets = ["tweet prétraité 1", "tweet prétraité 2", ...]  # Vos tweets prétraités
+cleaned_data = 'cleaned_data.csv'
 k = 5  # Exemple de seuil d'occurrence
-vocabulary = build_vocabulary(preprocessed_tweets, k)
+vocabulary = build_vocabulary(cleaned_data, k)
 save_vocabulary(vocabulary, 'vocab.txt')
 
 # Mapper chaque mot du tweet prétraité à son index dans la liste de vocabulaire
-indices_of_tweets = [map_words_to_indices(tweet, vocabulary) for tweet in preprocessed_tweets]
+#indices_of_tweets = [map_words_to_indices(tweet, vocabulary) for tweet in preprocessed_tweets]
