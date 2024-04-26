@@ -10,13 +10,24 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 import csv
 import os
+
+
 print(os.getcwd())
+
 def clean_tweet(tweet):
+
     # Convertir en minuscules
     tweet = tweet.lower()
     
     # Supprimer les balises HTML
     tweet = re.sub(r'<[^>]+>', '', tweet)
+
+    # Suprimer les @
+
+    tweet = re.sub(r'@\w*(?=\s)', '', tweet)
+
+    # Suprimer les lien https
+    tweet = re.sub(r'http(s?)://[\w\/\.]+(?=\s)', '', tweet)
     
     # Initialiser le stemmer
     stemmer = PorterStemmer()
@@ -48,6 +59,6 @@ def clean_csv(input_file, output_file):
                 cleaned_row = [row[0], row[1], row[2], row[3], row[4], clean_tweet(row[5])]
                 writer.writerow(cleaned_row)
 
-input_file = 'projetRN\data.csv'
+input_file = 'data.csv'
 output_file = 'cleaned_data.csv'
 clean_csv(input_file, output_file)
