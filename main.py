@@ -5,8 +5,8 @@ import sklearn as sk
 
 
 import re
-from nltk.stem import PorterStemmer
-from nltk.tokenize import word_tokenize
+from nltk.stem import PorterStemmer, WordNetLemmatizer
+from nltk.tokenize import RegexpTokenizer
 from nltk.corpus import stopwords
 import csv
 import os
@@ -22,28 +22,31 @@ def clean_tweet(tweet):
     # Supprimer les balises HTML
     tweet = re.sub(r'<[^>]+>', '', tweet)
 
-    # Suprimer les @
-
+    # Suprimer les @user
     tweet = re.sub(r'@\w*(?=\s)', '', tweet)
 
     # Suprimer les lien https
-    tweet = re.sub(r'http(s?)://[\w\/\.]+(?=\s)', '', tweet)
-    
-    # Initialiser le stemmer
-    stemmer = PorterStemmer()
-    
+    tweet = re.sub(r'http(s?)://[\w\/\.]+(?=\s?)', '', tweet)
+
+    # Suprimer les hashtags
+    tweet = re.sub(r'#\w+', '', tweet)
+
     # Tokenisation des mots
-    words = word_tokenize(tweet)
-    
-    # Supprimer les mots vides
+    tokenizer = RegexpTokenizer(r'\w+')
+    words = tokenizer.tokenize(tweet)
+
+    # Supprimer stop words
     stop_words = set(stopwords.words('english'))
-    words = [word for word in words if word not in stop_words]
+    words = [word for word in words if not word in stop_words]
     
     # Radicalisation des mots
-    words = [stemmer.stem(word) for word in words]
+    stemmer = PorterStemmer()
+    wnl = WordNetLemmatizer()
+    words = [wnl.lemmatize(word) for word in words]
+
     
     # Supprimer les non-mots et la ponctuation
-    tweet = ' '.join(re.findall(r'\b[a-zA-Z][a-z\']*\b', ' '.join(words)))
+    tweet = ' '.join(re.findall(r'\b[a-z]+\b', ' '.join(words)))
     
     # Remplacer les espaces blancs multiples par un seul espace
     tweet = re.sub(r'\s+', ' ', tweet)
@@ -61,4 +64,11 @@ def clean_csv(input_file, output_file):
 
 input_file = 'data.csv'
 output_file = 'cleaned_data.csv'
+
+try:
+    os.remove(output_file)
+    print("removed old " + output_file)
+except OSError:
+    pass
+
 clean_csv(input_file, output_file)
