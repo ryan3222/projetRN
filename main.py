@@ -43,7 +43,7 @@ def clean_tweet(tweet):
     words = [stemmer.stem(word) for word in words]
     
     # Supprimer les non-mots et la ponctuation
-    tweet = ' '.join(re.findall(r'\b[a-z]+\b', ' '.join(words)))
+    tweet = ' '.join(re.findall(r'\b[a-zA-Z][a-z\']*\b', ' '.join(words)))
     
     # Remplacer les espaces blancs multiples par un seul espace
     tweet = re.sub(r'\s+', ' ', tweet)
