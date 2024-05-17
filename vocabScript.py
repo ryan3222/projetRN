@@ -38,7 +38,7 @@ def map_words_to_indices(cleaned_data, vocabulary):
             indices.append(tweet_indices_row)        
     return indices
 
-k = 5000  # Exemple de seuil d'occurrence 3200 pour avoir 600
+k = 9000  # Exemple de seuil d'occurrence 3200 pour avoir 600
 cleaned_data ='cleaned_data.csv'
 vocabulary = generer_vocab(cleaned_data, k)
 

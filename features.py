@@ -1,13 +1,4 @@
-import numpy as np
-import matplotlib.pyplot as plt 
-import math
-import sklearn as sk
-import re
-from nltk.stem import PorterStemmer
-from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords
 import csv
-import os
 
 
 def binary_feature_representation_for_data(data, vocabulary,output_file,indices_file):
