@@ -8,3 +8,4 @@ final_data_shuffled.csv
 testData.csv
 models/
 weights/
+__pycache__/
