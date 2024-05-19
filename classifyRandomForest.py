@@ -38,10 +38,11 @@ gc.collect()
 
 # initialize the model / load a model
 model = RandomForestClassifier(n_estimators=100, random_state=42)
-# model = load('models/LRClassifier-v001.joblib')
+# model = load('models/RFClassifier-v001.joblib')
 
 # Train the classifier on the training data
 model.fit(X_train, y_train)
+dump(model, 'models/RFClassifier-v001.joblib')
 
 # Make predictions on the testing data
 y_pred_proba = model.predict_proba(X_test)
@@ -85,7 +86,7 @@ plt.xlim([0.0, 1.0])
 plt.ylim([0.0, 1.05])
 plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate')
-plt.title('ROC - KNN')
+plt.title('ROC - Random Forest')
 plt.legend(loc='lower right')
 plt.show()
 

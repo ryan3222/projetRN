@@ -1,15 +1,12 @@
 import csv
 
-
-
-
 class TweetFeatureExtractor:
     def __init__(self, vocabulary):
         self.vocabulary = vocabulary
 
     def binary_feature_representation_for_tweet(self, tweet):
         feature_vector = [1 if word in tweet else 0 for word in self.vocabulary]
-        return feature_vector
+        return (feature_vector)
 
     def binary_feature_representation_for_data(self, data_file, output_file, indices_file):
         with open(output_file, 'w', newline='', encoding='utf-8') as output_csv:
