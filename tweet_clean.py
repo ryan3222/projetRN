@@ -1,11 +1,5 @@
-import numpy as np
-import matplotlib.pyplot as plt 
-import math
-import sklearn as sk
-
-
 import re
-from nltk.stem import PorterStemmer, WordNetLemmatizer
+from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import RegexpTokenizer
 from nltk.corpus import stopwords
 import csv
