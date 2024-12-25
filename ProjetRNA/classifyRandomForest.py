@@ -1,17 +1,20 @@
 from matplotlib import pyplot as plt
 import numpy as np
 import pandas as pd
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import accuracy_score, auc, precision_recall_curve, precision_score, recall_score, f1_score, confusion_matrix, classification_report, roc_curve
-
-import gc
 import seaborn as sns
 
-from joblib import dump, load
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, auc, precision_recall_curve, precision_score, recall_score, f1_score, roc_auc_score, confusion_matrix, classification_report, roc_curve
+
+from joblib import dump,load
+import gc
+
+
+df = pd.read_csv('testData.csv', header=None)
 
 # loading, setting and spliting the dataframe  
 print("\nreading data ...")
-df = pd.read_csv('testData.csv', header=None)
+df = pd.read_csv('final_data.csv', header=None)
 print(df.head())
 
 print("\nsplitting data ...")
@@ -33,18 +36,15 @@ del train_df
 gc.collect()
 
 
-# parameters
-k = 5
-
 # initialize the model / load a model
-model = KNeighborsClassifier(n_neighbors=k, weights='distance', n_jobs=-1)
-# model = load('models/KNNClassifier-v001.joblib')
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+# model = load('models/RFClassifier-v001.joblib')
 
-# fit and save the model
+# Train the classifier on the training data
 model.fit(X_train, y_train)
-dump(model, 'models/KNNClassifier-v001.joblib')
+dump(model, 'models/RFClassifier-v001.joblib')
 
-# predict
+# Make predictions on the testing data
 y_pred_proba = model.predict_proba(X_test)
 y_pred_proba = y_pred_proba[:, 1]
 y_pred = np.array([1 if x >= 0.5 else 0 for x in y_pred_proba])
@@ -70,7 +70,7 @@ conf_matrix = confusion_matrix(y_test, y_pred)
 
 plt.figure(figsize=(8, 6))
 sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues')
-plt.title('Confusion Matrix - KNN')
+plt.title('Confusion Matrix - Random Forest')
 plt.ylabel('True Label')
 plt.xlabel('Predicted Label')
 plt.show()
@@ -86,7 +86,7 @@ plt.xlim([0.0, 1.0])
 plt.ylim([0.0, 1.05])
 plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate')
-plt.title('ROC - KNN')
+plt.title('ROC - Random Forest')
 plt.legend(loc='lower right')
 plt.show()
 
@@ -97,5 +97,5 @@ plt.figure()
 plt.plot(recall, precision, color='blue', lw=2)
 plt.xlabel('Recall')
 plt.ylabel('Precision')
-plt.title('Precision-Recall Curve - KNN')
+plt.title('Precision-Recall Curve - Random Forest')
 plt.show()

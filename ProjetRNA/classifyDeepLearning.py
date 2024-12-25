@@ -7,19 +7,6 @@ from sklearn.metrics import accuracy_score, precision_recall_curve, precision_sc
 
 import gc
 
-# setting to use gpu max memory
-# gpus = tf.config.experimental.list_physical_devices('GPU')
-# if gpus:
-#     try:
-#         for gpu in gpus:
-#             tf.config.experimental.set_memory_growth(gpu, True)
-#             # Uncomment the next line to limit GPU memory usage (e.g., 90%)
-#             tf.config.experimental.set_virtual_device_configuration(gpu, [tf.config.experimental.VirtualDeviceConfiguration(memory_limit=4096 * 0.9)])
-#     except RuntimeError as e:
-#         print(e)
-
-# loading, setting and spliting the dataframe
-
 print("\nreading data ...")
 df = pd.read_csv('final_data.csv', header=None)
 print(df.head())
